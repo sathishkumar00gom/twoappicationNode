@@ -1,4 +1,4 @@
-const users=require("../Data/data")
+const {users,tours}=require("../Data/data")
 const JWT = require("jsonwebtoken")
 exports.getAllUsers=(req,res)=>{
     res.status(200).json({
@@ -8,8 +8,17 @@ exports.getAllUsers=(req,res)=>{
         }
     })
 }
+
+exports.getAllTours=(req,res)=>{
+    res.status(200).json({
+        status:"success",
+        data:{
+            user:tours
+        }
+    })
+}
 exports.PostNewData=(req,res)=>{
-    const {name,password,email}=req.body
+    const {password,email}=req.body
     console.log("hai",users)
     let user=users.find((el)=>el.email===email)
     console.log("second",users)
@@ -24,17 +33,17 @@ exports.PostNewData=(req,res)=>{
             email,
             password
         })
-    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:2000})
+    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"2m"})
     console.log(token)
     res.status(200).json({
         status:"success",
-        data:token
+        token:token
     })
     console.log(users)
 }
 
 exports.PostNewLogin=(req,res)=>{
-    const {name,email,passsword}=req.body
+    const {email,passsword}=req.body
     const user=users.find((el)=>el.email===email)
     if(!user){
         res.status(401).json({
@@ -42,11 +51,11 @@ exports.PostNewLogin=(req,res)=>{
             error:[{msg:"invalid token"}]
         })
     }
-    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"10m"})
-    const refreshToken=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"15m"})
+    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"6m"})
+    const refreshToken=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:'1h'})
     res.status(200).json({
         status:"success",
-        data:{
+        message:{
             token,
             refreshToken
         }
@@ -62,7 +71,7 @@ exports.refreshTokenHandler=(req,res)=>{
     let currentEmail=users.find((el)=>el.email===email)
     console.log(currentEmail)
     if(currentEmail){
-        const token = JWT.sign({ email }, "kjsdksdlkslds12ksjdksd", { expiresIn: "10m" })
+        const token = JWT.sign({ email }, "kjsdksdlkslds12ksjdksd", { expiresIn: "6m"})
         return res.status(200).json({
             status:"success",
             data:{
@@ -73,3 +82,25 @@ exports.refreshTokenHandler=(req,res)=>{
     }
 }
 
+
+
+
+exports.checkAuth=(req,res,next)=>{
+    const token= req.headers["x-access-token"];
+    console.log("tokens",token)
+    if(!token){
+        res.status(400).json({
+            "errors": [{ msg: "No Token Found" }]
+        })
+    }
+    try{
+        const user=JWT.verify(token,"kjsdksdlkslds12ksjdksd")
+        conosle.log("token verify",user)
+        next()
+    }
+    catch(e){
+        res.status(400).json({
+            "errors": [{ msg: "Invalid User" }]
+        })
+    }
+}

@@ -1,9 +1,12 @@
 import React from 'react'
-import Header from './Componets/UI/Header'
+import {BrowserRouter} from 'react-router-dom'
+import MainRouter from './Componets/RouterComponent/MainRouter'
 const App=()=>{
   return (
     <>
-    <Header/>
+    <BrowserRouter>
+    <MainRouter/>
+    </BrowserRouter>
     </>
   )
 }

@@ -3,6 +3,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/material/styles';
 import LanguageIcon from '@mui/icons-material/Language';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Typography, Toolbar, InputBase, FormControl, InputAdornment, Button } from '@mui/material'
 const BootstrapInput = styled(InputBase)(() => ({
     '& .MuiInputBase-input': {
@@ -34,6 +35,7 @@ const BootstrapInput = styled(InputBase)(() => ({
 }));
 
 const Header = () => {
+    let navigate=useNavigate()
     return (
         <>
             <AppBar position="static">
@@ -72,11 +74,11 @@ const Header = () => {
                             </Box>
                             <Box>
                                 <Box sx={{ border: "1px solid black", padding: "5px" }}>
-                                    <Button sx={{ width: "100%", background: "#fff" }} color="success">Login</Button>
+                                    <Button onClick={()=>{navigate("/login")}} sx={{ width: "100%", background: "#fff" }} color="success">Login</Button>
                                 </Box>
                             </Box>
                             <Box sx={{ border: "1px solid black", padding: "5px" }}>
-                                <Button sx={{ width: "100%", background: "#fff" }} color="success">signup</Button>
+                                <Button  onClick={()=>{navigate("/signup")}} sx={{ width: "100%", background: "#fff" }} color="success">signup</Button>
                             </Box>
                             <Box>
 

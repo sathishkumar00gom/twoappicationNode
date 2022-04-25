@@ -1,5 +1,6 @@
+import TokenService from "./token.service";
 const authHeader=()=>{
-    const user = JSON.parse(localStorage.getItem('users'));
+    const user = TokenService.getAccessToken()
   if (user) {
     return { 'x-access-token': user};
   } else {

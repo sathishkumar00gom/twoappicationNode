@@ -10,6 +10,7 @@ exports.getAllUsers=(req,res)=>{
 }
 
 exports.getAllTours=(req,res)=>{
+    console.log("hai get all tours")
     res.status(200).json({
         status:"success",
         data:{
@@ -19,9 +20,9 @@ exports.getAllTours=(req,res)=>{
 }
 exports.PostNewData=(req,res)=>{
     const {password,email}=req.body
-    console.log("hai",users)
+    console.log("signup",users)
     let user=users.find((el)=>el.email===email)
-    console.log("second",users)
+    console.log("database user available",users)
     if(user){
         res.status(400).json({
             status:"failed",
@@ -33,8 +34,8 @@ exports.PostNewData=(req,res)=>{
             email,
             password
         })
-    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"2m"})
-    console.log(token)
+    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"5m"})
+    console.log("signup token",token)
     res.status(200).json({
         status:"success",
         token:token
@@ -45,14 +46,16 @@ exports.PostNewData=(req,res)=>{
 exports.PostNewLogin=(req,res)=>{
     const {email,passsword}=req.body
     const user=users.find((el)=>el.email===email)
+    console.log("login available user",user)
     if(!user){
         res.status(401).json({
             status:"failed",
-            error:[{msg:"invalid token"}]
+            error:{msg:"no user found"}
         })
     }
     const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"6m"})
     const refreshToken=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:'1h'})
+    console.log("login token",token)
     res.status(200).json({
         status:"success",
         message:{
@@ -86,6 +89,14 @@ exports.refreshTokenHandler=(req,res)=>{
 
 
 exports.checkAuth=(req,res,next)=>{
+    const { TokenExpiredError } = JWT;
+const catchError = (err, res) => {
+  if (err instanceof TokenExpiredError) {
+    return res.status(401).send({ message: "Unauthorized! Access Token was expired!" });
+  }
+  return res.sendStatus(401).send({ message: "Unauthorized!" });
+}
+    console.log("hai inside")
     const token= req.headers["x-access-token"];
     console.log("tokens",token)
     if(!token){
@@ -93,14 +104,10 @@ exports.checkAuth=(req,res,next)=>{
             "errors": [{ msg: "No Token Found" }]
         })
     }
-    try{
-        const user=JWT.verify(token,"kjsdksdlkslds12ksjdksd")
-        conosle.log("token verify",user)
-        next()
-    }
-    catch(e){
-        res.status(400).json({
-            "errors": [{ msg: "Invalid User" }]
-        })
-    }
+    JWT.verify(token, "kjsdksdlkslds12ksjdksd", (err, decoded) => {
+        if (err) {
+          return catchError(err, res);
+        }
+        next();
+      });
 }

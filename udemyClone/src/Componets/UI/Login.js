@@ -58,12 +58,10 @@ const Login=()=>{
        let resp= await auth.login(data)
        console.log("login",resp)
        if(resp!==undefined){
-           console.log("second",resp)
            navigate("/tourPage")
-           //return resp
+           return resp
        }
-       console.log("resp",resp)
-        console.log("hai data",data)
+       console.log("login response",resp)
     }
     return (
     <>

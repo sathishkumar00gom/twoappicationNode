@@ -55,7 +55,6 @@ const Signup=()=>{
         }
        let resp= await auth.Signup(data)
        console.log("respsignup",resp)
-        console.log("hai data",data)
     }
     return (
     <>

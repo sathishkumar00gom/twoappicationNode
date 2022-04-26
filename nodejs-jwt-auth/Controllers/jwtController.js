@@ -10,7 +10,6 @@ exports.getAllUsers=(req,res)=>{
 }
 
 exports.getAllTours=(req,res)=>{
-    console.log("hai get all tours")
     res.status(200).json({
         status:"success",
         data:{
@@ -34,7 +33,7 @@ exports.PostNewData=(req,res)=>{
             email,
             password
         })
-    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"5m"})
+    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"1m"})
     console.log("signup token",token)
     res.status(200).json({
         status:"success",
@@ -53,7 +52,7 @@ exports.PostNewLogin=(req,res)=>{
             error:{msg:"no user found"}
         })
     }
-    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"6m"})
+    const token=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:"1m"})
     const refreshToken=JWT.sign({email},"kjsdksdlkslds12ksjdksd",{expiresIn:'1h'})
     console.log("login token",token)
     res.status(200).json({
@@ -66,15 +65,18 @@ exports.PostNewLogin=(req,res)=>{
 }
 
 exports.refreshTokenHandler=(req,res)=>{
-    const {refreshToken}=req.body
+  let refreshToken=req.body['x-access-token']
+// let refreshToken=req.body.refreshToken
     let decode=JWT.decode(refreshToken)
     console.log("haidecode",decode)
     console.log("hai mail",decode.email)
-    let email=decode.email
-    let currentEmail=users.find((el)=>el.email===email)
+    let currentEmail=decode.email
+    console.log("users=>>>>>>>>",users)
+ let Email=users.find((el)=>el.email===decode.email)
+ console.log("emails====>",Email)
     console.log(currentEmail)
     if(currentEmail){
-        const token = JWT.sign({ email }, "kjsdksdlkslds12ksjdksd", { expiresIn: "6m"})
+        const token = JWT.sign({ currentEmail }, "kjsdksdlkslds12ksjdksd", { expiresIn: "1m"})
         return res.status(200).json({
             status:"success",
             data:{

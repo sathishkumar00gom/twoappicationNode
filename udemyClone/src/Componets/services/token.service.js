@@ -18,7 +18,9 @@ const getRefreshToken=()=>{
 }
 const UpdateAccessToken=(token)=>{
   let user = JSON.parse(localStorage.getItem("accessToken"));
-  user= token
+  console.log("older access token",user)
+  user=token
+  console.log("user new access token",user)
   localStorage.setItem("accessToken", JSON.stringify(user));
 }
 const TokenService={

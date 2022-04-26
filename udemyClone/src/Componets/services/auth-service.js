@@ -1,4 +1,5 @@
 import axios from 'axios'
+import api from './api'
 import authHeader from './auth-header';
 import TokenService from './token.service';
 const Signup=async(data)=>{
@@ -38,11 +39,12 @@ const login=async(data)=>{
 
 const getallTours=async()=>{
     try{
-        return await axios.get("http://localhost:3004/auth/gettours",{ headers: authHeader() }).then((res)=>{
+        return await api.get("/gettours",{ headers: authHeader() }).then((res)=>{
             return res.data
         })
         .catch((err)=>{
             console.log("INISDE THEN GETTOUR ==>",err.response.data.message)
+            return err
         })
     }
     catch(e){

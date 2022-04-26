@@ -1,13 +1,15 @@
-import React,{useEffect} from 'react'
+import React,{useEffect, useState} from 'react'
 import auth from '../services/auth-service'
-import {Box,CardMedia,Card,CardContent,Typography,CardActions,Button} from '@mui/material'
+import {Box,CardMedia,Card,CardContent,Typography,CardActions,Button,Grid} from '@mui/material'
 const TourPage=()=>{
+  const [state,setState]=useState([])
     useEffect(()=>{
         (
             async()=>{
                 try{
                     let response=await auth.getallTours()
                     console.log("tours",response)
+                    setState(response.data.user)
                 }
                 catch(e){
                     console.log("tour",e)
@@ -17,7 +19,15 @@ const TourPage=()=>{
     },[])
     return (
         <Box sx={{mt:8}}>
-             <Card sx={{ maxWidth: 345 }}>
+          <Grid container>
+            <Grid item xs={12}>
+             <Grid container>
+             {
+          state && state.map((res)=>{
+            return (
+              <React.Fragment key={res.id}>
+                <Grid item xs={3}>
+                <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
         height="140"
@@ -26,7 +36,7 @@ const TourPage=()=>{
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+        {res.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Lizards are a widespread group of squamate reptiles, with over 6,000
@@ -38,6 +48,14 @@ const TourPage=()=>{
         <Button size="small">Learn More</Button>
       </CardActions>
     </Card>
+                </Grid>
+            </React.Fragment>
+            )
+          })
+        }
+             </Grid>
+            </Grid>
+          </Grid>
         </Box>
     )
 }

@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import {Box,Typography,Grid,InputBase, Button} from '@mui/material'
 import { alpha, styled } from '@mui/material/styles';
-import auth from '../services/auth-service'
+import AuthService from "../services/AuthService";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
@@ -53,7 +53,7 @@ const Signup=()=>{
             email:state.email,
             password:state.password
         }
-       let resp= await auth.Signup(data)
+       let resp= await AuthService.Signup(data)
        console.log("respsignup",resp)
     }
     return (

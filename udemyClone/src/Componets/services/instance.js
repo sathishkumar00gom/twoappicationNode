@@ -1,12 +1,12 @@
 import axios from "axios";
 import TokenService from "./token.service";
 const instance=axios.create({
-    baseURL: "http://localhost:3004/auth",
+    baseURL: `${process.env.REACT_APP_API_URL}/auth`,
     headers: {
       "Content-Type": "application/json",
     },
 })
-instance.interceptors.request.use((request, response) => {
+instance.interceptors.request.use((request, _response) => {
   console.log(request, 'axios - interceptors - request - request !!!!!')
   const token = TokenService.getAccessToken()
   request.headers = { "x-access-token":token,"Content-Type": "application/json" }

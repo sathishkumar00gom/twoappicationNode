@@ -1,10 +1,10 @@
 import axios from 'axios'
-import api from './api'
+import api from './instance'
 import authHeader from './auth-header';
 import TokenService from './token.service';
 const Signup=async(data)=>{
     try{
-        return await axios.post("http://localhost:3004/auth/signup",data).then((res)=>{
+        return await axios.post(`${process.env.REACT_APP_API_URL}/auth/signup`,data).then((res)=>{
             if (res.data.token) {
                 TokenService.setSignupUser(res.data.token)
             }
@@ -20,7 +20,7 @@ const Signup=async(data)=>{
 
 const login=async(data)=>{
     try{
-        return await axios.post("http://localhost:3004/auth/login",data).then((res)=>{
+        return await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`,data).then((res)=>{
             console.log(res.data.message,"postlogin")
             if (res.data.message.token && res.data.message.refreshToken) {
                 TokenService.setAccessToken(res.data.message.token)
@@ -51,8 +51,8 @@ const getallTours=async()=>{
         console.log("OUTSIDE CATCH GETTOUR===>",e)
     }
 }
-const auth={
+const AuthService={
     login,Signup,getallTours
 }
 
-export default auth
+export default AuthService

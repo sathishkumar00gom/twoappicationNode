@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import {Box,Typography,Grid,InputBase, Button} from '@mui/material'
 import { alpha, styled } from '@mui/material/styles';
-import auth from '../services/auth-service'
+import AuthService from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -55,7 +55,7 @@ const Login=()=>{
             email:state.email,
             password:state.password
         }
-       let resp= await auth.login(data)
+       let resp= await AuthService.login(data)
        console.log("login",resp)
        if(resp!==undefined){
            navigate("/tourPage")

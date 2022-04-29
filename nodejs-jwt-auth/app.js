@@ -7,6 +7,7 @@ const corsOptions ={
     credentials:true,          
     optionSuccessStatus:200
 }
+console.log("sameport",process.env.NODE_ENV)
 app.use(cors(corsOptions));
 app.use(express.json())
 app.use("/auth",jwtRouter)

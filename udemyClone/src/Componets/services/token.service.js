@@ -9,12 +9,10 @@ const setRefreshToken=(user)=>{
   localStorage.setItem("RefreshToken", JSON.stringify(user));
 }
 const getAccessToken=()=>{
-  const user=JSON.parse(localStorage.getItem("accessToken"))
-  return user
+  return JSON.parse(localStorage.getItem("accessToken"))
 }
 const getRefreshToken=()=>{
-  const user=JSON.parse(localStorage.getItem("RefreshToken"))
-  return user
+  return JSON.parse(localStorage.getItem("RefreshToken"))
 }
 const UpdateAccessToken=(token)=>{
   let user = JSON.parse(localStorage.getItem("accessToken"));

@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import auth from '../services/auth-service'
+import AuthService from '../services/AuthService'
 import {Box,CardMedia,Card,CardContent,Typography,CardActions,Button,Grid} from '@mui/material'
 const TourPage=()=>{
   const [state,setState]=useState([])
@@ -7,7 +7,7 @@ const TourPage=()=>{
         (
             async()=>{
                 try{
-                    let response=await auth.getallTours()
+                    let response=await AuthService.getallTours()
                     console.log("tours",response)
                     setState(response.data.user)
                 }

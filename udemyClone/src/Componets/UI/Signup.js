@@ -2,7 +2,15 @@ import React,{useState} from "react";
 import {Box,Typography,Grid,InputBase, Button} from '@mui/material'
 import { alpha, styled } from '@mui/material/styles';
 import AuthService from "../services/AuthService";
+import { makeStyles } from '@mui/styles';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+// import S3 from 'react-aws-s3'
+import {uploadFile} from 'react-s3'
 
+window.Buffer = window.Buffer || require("buffer").Buffer;
+const Input = styled('input')({
+  display: 'none'
+});
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
     'label + &': {
       marginTop: theme.spacing(3),
@@ -39,13 +47,77 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
       },
     },
   }));
+  const useStyles = makeStyles({
+    root: {
+      height: '800px'
+    },
+    alignBox: {
+      display: 'flex',
+      justifyContent: 'center',
+      flexGrow: 2
+    },
+    btn: {
+      width: '100%',
+      background: 'lightGreen',
+      padding: '10px',
+      marginTop: '20px',
+      borderRadius: '50px',
+      border: '2px solid lightGreen'
+    },
+    imageShow: {
+      width: '150px',
+      height: '150px',
+      borderRadius: '50px',
+      background: '#46b5cc'
+    },
+    spaceBox: {
+      marginTop: '20px',
+      paddingRight: '10px'
+    },
+    camera: {
+      position: 'relative',
+      top: '110px',
+      bottom: '50px',
+      left: '20px',
+      right: '30px',
+      fontSize: '40px',
+      color: '#c0e6ee'
+    },
+    AfterPic: {
+      top: '-40px',
+      left: '58px',
+      color: '#c0e6ee',
+      right: '30px',
+      bottom: '50px',
+      position: 'relative',
+      fontSize: '40px'
+    }
+  });
 const Signup=()=>{
+  const classes=useStyles()
+  const [filename,setfilename]=useState("")
+  const [file,setfile]=useState({})
+  const[img,setimg]=useState("")
     const [state,setState]=useState({
         email:"",
         password:""
     })
     const handleChange=(e)=>{
         setState({...state,[e.target.name]:e.target.value})
+    }
+    const handleInputFileChange=(e)=>{
+      console.log("onosde",e.target.files)
+      let file=e.target.files[0]
+      let filename=e.target.files[0].name
+      setfilename(filename)
+      setfile(file)
+      let reader;
+      reader= new FileReader();
+      reader.onload = ()=> {
+        console.log('inside onload', reader);
+        setimg(reader.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
     }
     const handleSubmit=async(e)=>{
         e.preventDefault()
@@ -55,6 +127,22 @@ const Signup=()=>{
         }
        let resp= await AuthService.Signup(data)
        console.log("respsignup",resp)
+       /*file upload*/
+       const config={
+         bucketName:process.env.REACT_APP_BUCKET_NAME,
+         region:process.env.REACT_APP_REGION,
+         accessKeyId:process.env.REACT_APP_ACCESS_ID,
+         secretAccessKey:process.env.REACT_APP_ACCESS_KEY,
+       }
+       console.log(config)
+       console.log([file,filename])
+      //  const ReactS3Client=new S3(config)
+       uploadFile(file,config).then((data)=>{
+         console.log(data)
+       })
+       .catch((e)=>{
+         console.log("err",e)
+       })
     }
     return (
     <>
@@ -67,6 +155,21 @@ const Signup=()=>{
                 <Typography>signup In to Your Udemy Account</Typography>
                 </Box>
                 <hr/>
+                <Box>
+                <Box className={classes.imageShow}>
+                    <img alt="img" className={classes.imageShow} src={img} />
+                    <label htmlFor="icon-button-file">
+                      <Input
+                        onChange={(e) => handleInputFileChange(e)}
+                       
+                        id="icon-button-file"
+                        type="file"
+                      />
+
+                      <PhotoCamera className={img ? `${classes.AfterPic}` : `${classes.camera}`} />
+                    </label>
+                  </Box>
+                </Box>
                 <Grid item xs={12}>  
                     <BootstrapInput fullWidth name="email" value={state.email} onChange={handleChange} id="bootstrap-input" sx={{mb:2}}/>
                 </Grid>

@@ -7,7 +7,7 @@ const corsOptions ={
     credentials:true,          
     optionSuccessStatus:200
 }
-console.log("sameport",process.env.NODE_ENV)
+console.log("sameport",process.env.S3_BUCKET)
 app.use(cors(corsOptions));
 app.use(express.json())
 app.use("/auth",jwtRouter)

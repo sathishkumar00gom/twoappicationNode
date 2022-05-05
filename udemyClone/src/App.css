@@ -40,3 +40,11 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+
+
+.main li:hover>ul.dropdown-menu{
+display: block;
+}

@@ -5,20 +5,27 @@ import Login from '../UI/Login'
 import HomePage from '../UI/HomePage'
 import Signup from '../UI/Signup'
 import TourPage from '../UI/TourPage'
+import {AppBar,Toolbar} from '@mui/material'
+import DrawerComponent from '../UI/DrawerComponent'
 const MainRouter=()=>{
+    const drawerWidth=240
     return (
         <>
-        <header>
-            <Header/>
-        </header>
-     
+         <AppBar
+        position="fixed"
+        sx={{ width: `calc(100% - ${drawerWidth}px)`,background:"#ced4da",ml: `${drawerWidth}px` }}
+      >
+        <Toolbar>
+         <Header/>
+        </Toolbar>
+      </AppBar>
+        <DrawerComponent/>
         <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/tourPage" element={<TourPage/>}/>
         </Routes>
-       
         </>
     )
 }

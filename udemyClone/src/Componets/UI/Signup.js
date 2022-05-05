@@ -4,10 +4,10 @@ import { alpha, styled } from '@mui/material/styles';
 import AuthService from "../services/AuthService";
 import { makeStyles } from '@mui/styles';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-// import S3 from 'react-aws-s3'
-import {uploadFile} from 'react-s3'
-
+import S3 from 'react-aws-s3'
+import '../../App.css'
 window.Buffer = window.Buffer || require("buffer").Buffer;
+
 const Input = styled('input')({
   display: 'none'
 });
@@ -18,8 +18,8 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     '& .MuiInputBase-input': {
       borderRadius: 4,
       position: 'relative',
-      backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
-      border: '1px solid #ced4da',
+      backgroundColor: theme.palette.mode === 'light' ? '/fcfcfb' : '/2b2b2b',
+      border: '1px solid /ced4da',
       fontSize: 16,
       width: '100%',
       padding: '10px 12px',
@@ -68,7 +68,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
       width: '150px',
       height: '150px',
       borderRadius: '50px',
-      background: '#46b5cc'
+      background: '/46b5cc'
     },
     spaceBox: {
       marginTop: '20px',
@@ -81,12 +81,12 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
       left: '20px',
       right: '30px',
       fontSize: '40px',
-      color: '#c0e6ee'
+      color: '/c0e6ee'
     },
     AfterPic: {
       top: '-40px',
       left: '58px',
-      color: '#c0e6ee',
+      color: '/c0e6ee',
       right: '30px',
       bottom: '50px',
       position: 'relative',
@@ -134,16 +134,19 @@ const Signup=()=>{
          accessKeyId:process.env.REACT_APP_ACCESS_ID,
          secretAccessKey:process.env.REACT_APP_ACCESS_KEY,
        }
-       console.log(config)
-       console.log([file,filename])
-      //  const ReactS3Client=new S3(config)
-       uploadFile(file,config).then((data)=>{
-         console.log(data)
-       })
-       .catch((e)=>{
-         console.log("err",e)
-       })
+       const newObject  = {
+        'lastModified'     : file.lastModified,
+        'lastModifiedDate' : file.lastModifiedDate,
+        'name'             : file.name,
+        'size'             : file.size,
+        'type'             : file.type
+     };  
+     console.log(newObject)
+      let fileJson=JSON.stringify(newObject)
+      const ReactS3Client = new S3(config);
+        ReactS3Client.uploadFile(fileJson,filename).then((data)=>console.log(data)).catch(e=>{console.log(e)})
     }
+
     return (
     <>
     <Box sx={{mt:30}}>
@@ -179,10 +182,40 @@ const Signup=()=>{
                 <Grid item xs={12}>  
                    <Button  onClick={handleSubmit} fullWidth variant="contained" color="success" >signup</Button>
                 </Grid>
+                <div>
+                            <ul className="main">
+                            <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="false"> Dropdown </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a className="dropdown-item" href="/">Action</a></li>
+                    <li><a className="dropdown-item" href="/">Another action</a></li>
+                    <li className="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="http://google.com">Google</a>
+                        <ul className="dropdown-menu">
+                            <li><a className="dropdown-item" href="/">Submenu</a></li>
+                            <li><a className="dropdown-item" href="/">Submenu0</a></li>
+                            <li className="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="/">Submenu 1</a>
+                                <ul className="dropdown-menu">
+                                    <li><a className="dropdown-item" href="/">Subsubmenu1</a></li>
+                                    <li><a className="dropdown-item" href="/">Subsubmenu1</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="/">Submenu 2</a>
+                                <ul class="dropdown-menu">
+                                    <li><a className="dropdown-item" href="/">Subsubmenu2</a></li>
+                                    <li><a className="dropdown-item" href="/">Subsubmenu2</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+                            </ul>
+                        </div>
             </Grid>
             <Grid item xs={4}>
             </Grid>
         </Grid>
+       
     </Box>
     </>)
 }

@@ -4,7 +4,49 @@ import { styled } from '@mui/material/styles';
 import LanguageIcon from '@mui/icons-material/Language';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useNavigate } from 'react-router-dom';
-import { AppBar, Box, Typography, Toolbar, InputBase, FormControl, InputAdornment, Button } from '@mui/material'
+import './Header.css'
+import $ from 'jquery'
+import { Box, Typography, InputBase, FormControl, InputAdornment, Button } from '@mui/material'
+// $(function () {
+//     var $links = $('.dropdown-submenu span.test').on("click", function (e) {
+//         var submenu = $(this).next();
+//         console.log("inside", submenu)
+//         $subs.not(submenu).hide();
+//         submenu.toggle();
+//         e.stopPropagation();
+//         e.preventDefault();
+//     });
+//     var $subs = $links.next();
+//     console.log("hai ouside", $subs)
+
+//     $('.dropdown-toggle').on('click', function (e) {
+//         $('.dropdown-submenu .dropdown-menu').hide();
+//     });
+// })
+
+$(function () {
+    // ------------------------------------------------------- //
+    // Multi Level dropdowns
+    // ------------------------------------------------------ //
+    $("ul.dropdown-menu [data-toggle='dropdown']").on("click", function (event) {
+        console.log("clicked")
+        event.preventDefault();
+        event.stopPropagation();
+
+        $(this).siblings().toggleClass("show");
+        
+        // $(".outside").on("click", function (e) {
+        //     console.log("outside clicked")
+        //     $('.dropdown-submenu .show').removeClass("show")
+        //     $("ul.dropdown-menu .show").removeClass("show")
+        // })
+        $(this).parents('li.nav-item.dropdown.show').on('hide.bs.dropdown', function (e) {
+            console.log("hai parent")
+            $('.dropdown-submenu .show').removeClass("show")
+        });
+    });
+});
+
 const BootstrapInput = styled(InputBase)(() => ({
     '& .MuiInputBase-input': {
 
@@ -35,65 +77,68 @@ const BootstrapInput = styled(InputBase)(() => ({
 }));
 
 const Header = () => {
-    let navigate=useNavigate()
+    let navigate = useNavigate()
     return (
         <>
-            <AppBar position="static">
-                <Toolbar>
-                    <Box sx={{ pl: 1, pr: 1, pt: 1, pb: 1 }}>
-                    <Box sx={{display: "flex",flexDirection: "row", alignItems: "center" ,justifyContent:"space-between"}}>
-                            <Box sx={{display:"flex",justifyContent:"space-between"}}>
-                          
+            <div class="outside">
+                {/* <AppBar position="fixed">
+                <Toolbar> */}
+                <Box sx={{ pl: 1, pr: 1, pt: 1, pb: 1 }}>
+                    <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+
+                        </Box>
+                        <Box>
+                            <Box style={{
+                                height: "2.8rem",
+                                border: "1px solid /1c1d1f",
+                                borderRadius: "9999px",
+                                padding: "5px",
+                                backgroundColor: "/f7f9fa",
+                                margin: "0 1.2rem"
+                            }}>
+                                <FormControl variant="standard">
+                                    <BootstrapInput id="bootstrap-input" startAdornment={
+                                        <InputAdornment position="start">
+                                            <AccountCircle />
+                                        </InputAdornment>
+                                    } placeholder="search for anything" />
+                                </FormControl>
                             </Box>
-                            <Box>
-                                <Box style={{
-                                    height: "2.8rem",
-                                    border: "1px solid #1c1d1f",
-                                    borderRadius: "9999px",
-                                    padding: "5px",
-                                    backgroundColor: "#f7f9fa",
-                                    margin: "0 1.2rem"
-                                }}>
-                                    <FormControl variant="standard">
-                                        <BootstrapInput id="bootstrap-input" startAdornment={
-                                            <InputAdornment position="start">
-                                                <AccountCircle />
-                                            </InputAdornment>
-                                        } placeholder="search for anything" />
-                                    </FormControl>
-                                </Box>
-                            </Box>
-                            <Box>
-                                <Typography>Udemy Business</Typography>
-                            </Box>
-                            <Box>
-                                <Typography>Teach on udemy</Typography>
-                            </Box>
-                            <Box>
-                                <AddShoppingCartIcon />
-                            </Box>
-                            <Box>
-                                <Box sx={{ border: "1px solid black", padding: "5px" }}>
-                                    <Button onClick={()=>{navigate("/login")}} sx={{ width: "100%", background: "#fff" }} color="success">Login</Button>
-                                </Box>
-                            </Box>
+                        </Box>
+                        <Box>
+                            <Typography>Udemy Business</Typography>
+                        </Box>
+                        <Box>
+                            <Typography>Teach on udemy</Typography>
+                        </Box>
+                        <Box>
+                            <AddShoppingCartIcon />
+                        </Box>
+                        <Box>
                             <Box sx={{ border: "1px solid black", padding: "5px" }}>
-                                <Button  onClick={()=>{navigate("/signup")}} sx={{ width: "100%", background: "#fff" }} color="success">signup</Button>
+                                <Button onClick={() => { navigate("/login") }} sx={{ width: "100%", background: "/fff" }} color="success">Login</Button>
                             </Box>
-                            <Box>
+                        </Box>
+                        <Box sx={{ border: "1px solid black", padding: "5px" }}>
+                            <Button onClick={() => { navigate("/signup") }} sx={{ width: "100%", background: "/fff" }} color="success">signup</Button>
+                        </Box>
+                        <Box>
 
-                                <Button>signup</Button>
+                            <Button>signup</Button>
 
-                            </Box>
-                            <Box>
+                        </Box>
+                        <Box>
+                            <LanguageIcon />
+                        </Box>
+                       
 
-                                <LanguageIcon />
-
-                            </Box>
-                        </Box> 
+                        
                     </Box>
-                </Toolbar>
-            </AppBar>
+                </Box>
+                {/* </Toolbar>
+            </AppBar> */}
+            </div>
         </>
     )
 }

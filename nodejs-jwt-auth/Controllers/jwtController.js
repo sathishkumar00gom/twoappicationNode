@@ -19,6 +19,7 @@ exports.getAllTours=(req,res)=>{
 }
 exports.PostNewData=(req,res)=>{
     const {password,email}=req.body
+    console.log(req)
     console.log("signup",users)
     let user=users.find((el)=>el.email===email)
     console.log("database user available",users)

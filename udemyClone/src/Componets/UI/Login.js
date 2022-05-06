@@ -83,6 +83,9 @@ const Login=()=>{
                 <Grid item xs={12}>  
                    <Button  onClick={handleSubmit} fullWidth variant="contained" color="success" >Login</Button>
                 </Grid>
+                    <Box>
+                            <Button onClick={()=>navigate("/tourPage")}>tourpage</Button>
+                        </Box>
             </Grid>
             <Grid item xs={4}>
             </Grid>

@@ -45,8 +45,9 @@ const DrawerComponent = () => {
                             {open ? <ExpandLess /> : <ExpandMore />}
                         </ListItemIcon>
                     </ListItemButton>
-                    <Collapse in={open} timeout="auto">
+                    <Collapse in={open} timeout="auto" >
                         <List component="div" disablePadding>
+                            <Box sx={{background:"#ffc9c9"}}>
                             <ListItemButton sx={{ pl: 4 }}>
                                 <ListItemText primary="Grid" />
                             </ListItemButton>
@@ -59,8 +60,12 @@ const DrawerComponent = () => {
                                     {opens ? <ExpandMore /> : <ChevronRightIcon />}
                                 </ListItemIcon>
                             </ListItemButton>
+                            </Box>
                             <Collapse timeout="auto" in={opens}>
                                 <List component="div" disablePadding>
+                                    <Box sx={{background:"#868e96"}}>
+
+                                  
                                     <ListItemButton sx={{ pl: 8 }}>
                                         <ListItemText primary="Input" />
                                     </ListItemButton>
@@ -73,11 +78,14 @@ const DrawerComponent = () => {
                                             {more ? <ExpandMore /> : <ChevronRightIcon />}
                                         </ListItemIcon>
                                     </ListItemButton>
+                                    </Box>
                                     <Collapse timeout="auto" in={more}>
                                         <List component="div" disablePadding>
+                                            <Box sx={{background:"#a5d8ff"}}>
                                             <ListItemButton sx={{ pl: 16 }}>
                                                 <ListItemText primary="Label" />
                                             </ListItemButton>
+                                            </Box>
                                         </List>
                                     </Collapse>
                                 </List>

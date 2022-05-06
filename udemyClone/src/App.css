@@ -42,9 +42,13 @@
 }
 
 
-
-
-
-.main li:hover>ul.dropdown-menu{
+li .dropdown-submenu:hover>ul.dropdown-menu{
 display: block;
+}
+
+.menu1{
+  background-color: #61dafb;
+}
+.menu2{
+  background-color: aquamarine;
 }

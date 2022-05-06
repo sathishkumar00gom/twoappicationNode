@@ -131,7 +131,35 @@ const Header = () => {
                         <Box>
                             <LanguageIcon />
                         </Box>
-                       
+                        <div>
+                            <ul className="main">
+                            <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="false"> Dropdown </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li><a className="dropdown-item" href="/">Action</a></li>
+                    <li><a className="dropdown-item" href="/">Another action</a></li>
+                    <li className="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="http://google.com">Google</a>
+                        <ul className="dropdown-menu menu1">
+                            <li><a className="dropdown-item" href="/">Submenu</a></li>
+                            <li><a className="dropdown-item" href="/">Submenu0</a></li>
+                            <li className="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="/">Submenu 1</a>
+                                <ul className="dropdown-menu menu3">
+                                    <li><a className="dropdown-item" href="/">Subsubmenu1</a></li>
+                                    <li><a className="dropdown-item" href="/">Subsubmenu1</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="/">Submenu 2</a>
+                                <ul class="dropdown-menu menu2">
+                                    <li><a className="dropdown-item" href="/">Subsubmenu2</a></li>
+                                    <li><a className="dropdown-item" href="/">Subsubmenu2</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+                            </ul>
+                        </div>
 
                         
                     </Box>

@@ -66,18 +66,26 @@ exports.PostNewLogin=(req,res)=>{
 }
 
 exports.refreshTokenHandler=(req,res)=>{
-  let refreshToken=req.body['x-access-token']
+    console.log(req)
+
+    console.log("headers",req.headers)
+    console.log("haved token",req.headers['x-access-token'])
+    console.log("req.body['x-access-token']")
+  let refreshToken=req.headers['x-access-token']
+  //let refreshToken=req.headers.connection['x-access-token']
+  console.log("new refresh",refreshToken)
 // let refreshToken=req.body.refreshToken
     let decode=JWT.decode(refreshToken)
     console.log("haidecode",decode)
-    console.log("hai mail",decode.email)
-    let currentEmail=decode.email
+    console.log("hai mail",decode.currentEmail)
+    let currentEmail=decode.currentEmail
     console.log("users=>>>>>>>>",users)
- let Email=users.find((el)=>el.email===decode.email)
+ let Email=users.find((el)=>el.email===decode.currentEmail)
  console.log("emails====>",Email)
     console.log(currentEmail)
     if(currentEmail){
         const token = JWT.sign({ currentEmail }, "kjsdksdlkslds12ksjdksd", { expiresIn: "1m"})
+        console.log("new token",[token,currentEmail])
         return res.status(200).json({
             status:"success",
             data:{

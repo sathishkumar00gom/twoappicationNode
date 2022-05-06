@@ -149,11 +149,13 @@ const Signup=()=>{
 
     return (
     <>
-    <Box sx={{mt:30}}>
+    <Box sx={{mt:20}}>
+      
         <Grid container>
             <Grid item xs={4}>
             </Grid>
             <Grid item xs={4}>
+            
                 <Box>
                 <Typography>signup In to Your Udemy Account</Typography>
                 </Box>
@@ -182,35 +184,7 @@ const Signup=()=>{
                 <Grid item xs={12}>  
                    <Button  onClick={handleSubmit} fullWidth variant="contained" color="success" >signup</Button>
                 </Grid>
-                <div>
-                            <ul className="main">
-                            <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="false"> Dropdown </a>
-                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li><a className="dropdown-item" href="/">Action</a></li>
-                    <li><a className="dropdown-item" href="/">Another action</a></li>
-                    <li className="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="http://google.com">Google</a>
-                        <ul className="dropdown-menu">
-                            <li><a className="dropdown-item" href="/">Submenu</a></li>
-                            <li><a className="dropdown-item" href="/">Submenu0</a></li>
-                            <li className="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="/">Submenu 1</a>
-                                <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="/">Subsubmenu1</a></li>
-                                    <li><a className="dropdown-item" href="/">Subsubmenu1</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown-submenu"><a className="dropdown-item dropdown-toggle" href="/">Submenu 2</a>
-                                <ul class="dropdown-menu">
-                                    <li><a className="dropdown-item" href="/">Subsubmenu2</a></li>
-                                    <li><a className="dropdown-item" href="/">Subsubmenu2</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-                            </ul>
-                        </div>
+               
             </Grid>
             <Grid item xs={4}>
             </Grid>
